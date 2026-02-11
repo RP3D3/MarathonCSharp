@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+    />
+    <title>C# Марафон заданий</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Начальная страница настроек -->
+      <div id="setup-screen" class="screen active">
+        <div class="setup-container">
+          <h1>🏃 C# Марафон заданий</h1>
+
+          <div class="form-group">
+            <label for="lastname">Фамилия:</label>
+            <input
+              type="text"
+              id="lastname"
+              placeholder="Введите вашу фамилию"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Теги заданий:</label>
+            <div class="tags-actions">
+              <button id="select-all-tags" class="btn btn-secondary btn-small">
+                ✅ Выбрать все
+              </button>
+              <button
+                id="deselect-all-tags"
+                class="btn btn-secondary btn-small"
+              >
+                ❌ Снять все
+              </button>
+              <button id="random-tag" class="btn btn-secondary btn-small">
+                🎲 Случайный тег
+              </button>
+            </div>
+            <div id="tags-container" class="tags-container"></div>
+          </div>
+
+          <div class="form-group">
+            <label>Сложность:</label>
+            <div class="difficulty-range">
+              <select id="difficulty-from" class="difficulty-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <span class="difficulty-separator">—</span>
+              <select id="difficulty-to" class="difficulty-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Количество заданий:</label>
+
+            <!-- Пресеты для быстрого выбора -->
+            <div class="task-presets">
+              <button class="preset-btn" data-count="1">1</button>
+              <button class="preset-btn" data-count="3">3</button>
+              <button class="preset-btn" data-count="5">5</button>
+              <button class="preset-btn" data-count="10">10</button>
+              <button class="preset-btn" data-count="15">15</button>
+              <button class="preset-btn" data-count="20">20</button>
+              <button class="preset-btn" data-count="30">30</button>
+            </div>
+
+            <!-- Степпер для точной настройки -->
+            <div class="task-count-control center-content">
+              <button id="task-count-minus" class="stepper-btn">−</button>
+              <div class="task-count-display">
+                <span id="task-count-value" class="stepper-value">5</span>
+                <span class="task-count-max">/ 30</span>
+              </div>
+              <button id="task-count-plus" class="stepper-btn">+</button>
+            </div>
+
+            
+          </div>
+
+          <button id="start-marathon" class="btn btn-primary">
+            Начать марафон
+          </button>
+
+          <div class="history-section">
+            <div class="history-header">
+              <h2>История марафонов</h2>
+              <button id="clear-history-btn" class="btn btn-danger">
+                Очистить историю
+              </button>
+            </div>
+            <div id="history-list" class="history-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Экран марафона -->
+      <div id="marathon-screen" class="screen">
+        <!-- Фиксированный хедер -->
+        <div class="marathon-header-fixed">
+          <div class="marathon-header-content">
+            <div class="header-left">
+              <button
+                id="settings-btn"
+                class="header-btn settings-btn"
+                title="Вернуться к настройкам"
+              >
+                ⚙️
+              </button>
+            </div>
+
+            <div class="header-center">
+              <span id="current-task-indicator" class="task-indicator"></span>
+            </div>
+
+            <div class="header-right">
+              <button id="doc-btn" class="header-btn doc-btn">
+                📚 Документация
+              </button>
+              <div class="task-nav-buttons">
+                <button
+                  id="prev-btn"
+                  class="nav-btn-small"
+                  title="Предыдущее задание"
+                >
+                  ←
+                </button>
+                <button
+                  id="next-btn"
+                  class="nav-btn-small"
+                  title="Следующее задание"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-container">
+          <div class="task-content">
+            <h2 id="task-title" class="task-title-with-id"></h2>
+            <button
+              id="copy-task-btn"
+              class="copy-btn"
+              title="Скопировать задание"
+            >
+              📋 Копировать задание
+            </button>
+            <div id="task-description" class="task-description"></div>
+
+            <div id="requirements" class="requirements-section">
+              <h3>Требования:</h3>
+              <ul id="requirements-list" class="requirements-list"></ul>
+            </div>
+
+            <div id="hint" class="hint-section">
+              <h3>Подсказка:</h3>
+              <p id="hint-text"></p>
+            </div>
+
+            <div id="console-example" class="console-section">
+              <h3>Пример вывода в консоль:</h3>
+              <pre id="console-output"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно документации -->
+    <div id="doc-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Документация</h2>
+          <span class="close">&times;</span>
+        </div>
+        <div id="doc-content" class="modal-body"></div>
+      </div>
+    </div>
+    <div id="instruction-modal" class="modal instruction-modal">
+      <div class="modal-content instruction-content">
+        <div class="modal-header">
+          <h2>📋 Вставьте код в проект</h2>
+          <span class="close instruction-close">&times;</span>
+        </div>
+        <div class="modal-body instruction-body">
+          <div class="instruction-icon">⬇️</div>
+          <p class="instruction-text">
+            Скопируйте задание и вставьте его как комментарий в ваш код:
+          </p>
+          <div class="code-preview">
+            <pre id="instruction-code-example" class="instruction-code">
+//ЗАДАНИЕ 4 из 6 (ID:401)
+/*
+Ваш код решения
+*/
+                </pre
+            >
+          </div>
+          <div class="instruction-actions">
+            <button
+              id="instruction-copy-btn"
+              class="btn btn-primary instruction-copy-btn"
+            >
+              📋 Копировать задание
+            </button>
+            <button
+              id="copy-and-continue-btn"
+              class="btn btn-success instruction-continue-btn"
+            >
+              ✓ Скопировано, продолжаем!
+            </button>
+            <button
+              id="skip-instruction-btn"
+              class="btn btn-secondary instruction-skip-btn"
+            >
+              Пропустить
+            </button>
+          </div>
+          <p
+            id="already-copied-message"
+            class="already-copied-message"
+            style="display: none"
+          >
+            ✅ Вы уже копировали это задание. Можно продолжить!
+          </p>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
