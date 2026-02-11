@@ -1,1 +1,1354 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+    overflow-x: hidden;
+}
+
+#app {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* ========== ЭКРАН НАСТРОЕК ========== */
+.setup-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #667eea;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 35px;
+}
+
+label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #555;
+    font-size: 16px;
+}
+
+/* Стили для выбора сложности */
+.difficulty-range {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.difficulty-select {
+    width: 120px;
+    padding: 15px;
+    font-size: 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+}
+
+.difficulty-select:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 10px rgba(102, 126, 234, 0.1);
+}
+
+.difficulty-select:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.difficulty-separator {
+    font-size: 24px;
+    font-weight: 700;
+    color: #999;
+}
+
+/* Центрирование содержимого для количества заданий */
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Стили для степперов */
+.stepper-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+}
+
+.stepper-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.5);
+}
+
+.stepper-btn:active {
+    transform: scale(0.95);
+}
+
+.stepper-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #667eea;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* Управление тегами */
+.tags-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.btn-small {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start;
+}
+
+.tag-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #f0f0f0;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 15px;
+    border: 2px solid transparent;
+}
+
+.tag-checkbox:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.tag-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #667eea;
+}
+
+.tag-checkbox.selected {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #fff;
+}
+
+.tag-checkbox.selected input[type="checkbox"] {
+    accent-color: white;
+}
+
+/* Поля ввода */
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Кнопки */
+.btn {
+    padding: 15px 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* История */
+.history-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.history-list {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.history-item {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.history-item:hover {
+    background: #f0f0f0;
+    border-left-color: #667eea;
+    transform: translateX(5px);
+}
+
+.history-item .date {
+    font-size: 12px;
+    color: #999;
+}
+
+.history-item .main-info {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.no-history {
+    text-align: center;
+    color: #999;
+    padding: 30px;
+}
+
+/* ========== ЭКРАН МАРАФОНА ========== */
+#marathon-screen {
+    background: white;
+    position: relative;
+    min-height: 100vh;
+    padding-top: 80px; /* Отступ для фиксированного хедера */
+}
+
+/* Фиксированный хедер */
+.marathon-header-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+.marathon-header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+/* Левая секция хедера */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.settings-btn {
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.5);
+    color: white;
+    font-size: 24px;
+    padding: 8px 16px;
+    border-radius: 40px;
+}
+
+.settings-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+/* Центральная секция хедера */
+.header-center {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.task-indicator {
+    font-size: 18px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 20px;
+    border-radius: 40px;
+}
+
+.task-id {
+    font-size: 16px;
+    background: rgba(255,255,255,0.1);
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-family: 'Courier New', monospace;
+}
+/* Заголовок задания с кнопкой копирования */
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.task-title-with-id {
+    color: #667eea;
+    font-size: 28px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    display: inline-block;
+    position: relative;
+    cursor: help;
+    margin-bottom: 0;
+}
+
+.task-title-with-id:hover {
+    border-bottom-color: #667eea;
+}
+
+/* Кнопка копирования */
+.copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.copy-btn:active {
+    transform: translateY(0);
+}
+
+.copy-btn.copied {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+/* Кастомный тултип для ID */
+.task-title-with-id[data-id]:hover:after {
+    content: "ID: " attr(data-id);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: normal;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    margin-top: 8px;
+    z-index: 100;
+    pointer-events: none;
+    animation: fadeIn 0.2s ease;
+}
+
+.task-title-with-id[data-id]:hover:before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 100%;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #764ba2 transparent;
+    margin-top: -4px;
+    z-index: 101;
+    pointer-events: none;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Уведомление о копировании */
+.copy-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+    z-index: 2000;
+    animation: slideUp 0.3s ease, fadeOut 0.3s ease 2.7s;
+    pointer-events: none;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .task-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .copy-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .task-title-with-id {
+        font-size: 24px;
+    }
+    
+    .task-title-with-id[data-id]:active:after {
+        content: "ID: " attr(data-id);
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 40px;
+        font-size: 16px;
+        white-space: nowrap;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        z-index: 1000;
+        animation: slideUp 0.3s ease;
+    }
+}
+/* Модальное окно инструкции */
+.instruction-modal .modal-content {
+    max-width: 600px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.instruction-modal .modal-header {
+    border-bottom-color: rgba(255,255,255,0.2);
+}
+
+.instruction-modal .modal-header h2 {
+    color: white;
+    font-size: 28px;
+}
+
+.instruction-modal .close {
+    color: rgba(255,255,255,0.8);
+}
+
+.instruction-modal .close:hover {
+    color: white;
+}
+
+.instruction-body {
+    text-align: center;
+    padding: 20px;
+}
+
+.instruction-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.instruction-text {
+    font-size: 18px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.code-preview {
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+.instruction-code {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #fff;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+.instruction-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.instruction-btn {
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+#copy-and-continue-btn {
+    background: white;
+    color: #667eea;
+}
+
+#copy-and-continue-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+}
+
+#skip-instruction-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+#skip-instruction-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .instruction-modal .modal-content {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .instruction-actions {
+        flex-direction: column;
+    }
+    
+    .instruction-btn {
+        width: 100%;
+    }
+}
+/* Кнопки в инструкции */
+.instruction-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.instruction-copy-btn {
+    background: white;
+    color: #667eea;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.instruction-copy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+}
+
+.instruction-copy-btn.copied {
+    background: #28a745;
+    color: white;
+}
+
+.instruction-continue-btn {
+    background: #28a745;
+    color: white;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.instruction-continue-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+}
+
+.instruction-skip-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.instruction-skip-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+/* Сообщение о том, что задание уже копировали */
+.already-copied-message {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(40, 167, 69, 0.2);
+    border: 2px solid #28a745;
+    border-radius: 50px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .instruction-actions {
+        flex-direction: column;
+    }
+    
+    .instruction-copy-btn,
+    .instruction-continue-btn,
+    .instruction-skip-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/* Правая секция хедера */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-btn {
+    padding: 10px 25px;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-btn:hover {
+    background: #f8f9fa;
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(255,255,255,0.3);
+}
+
+/* Кнопки навигации в хедере */
+.task-nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+/* Пресеты количества заданий */
+.task-presets {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.preset-btn {
+    min-width: 50px;
+    padding: 10px 16px;
+    background: #f0f0f0;
+    border: 2px solid transparent;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.preset-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.preset-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #fff;
+}
+
+/* Дисплей количества заданий */
+.task-count-display {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.task-count-max {
+    font-size: 16px;
+    color: #999;
+    font-weight: normal;
+}
+
+/* Слайдер для количества заданий */
+.task-count-slider-container {
+    margin-top: 25px;
+    padding: 0 10px;
+}
+
+.task-count-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.task-count-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #667eea;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+    transition: all 0.2s;
+}
+
+.task-count-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: #667eea;
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    color: #999;
+    font-size: 12px;
+    padding: 0 5px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .task-presets {
+        gap: 8px;
+    }
+    
+    .preset-btn {
+        min-width: 45px;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .slider-labels {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .task-presets {
+        gap: 5px;
+    }
+    
+    .preset-btn {
+        min-width: 40px;
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+}
+.nav-btn-small {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: white;
+    color: #667eea;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.nav-btn-small:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(255,255,255,0.4);
+}
+
+.nav-btn-small:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #e0e0e0;
+    color: #999;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Контейнер с заданиями */
+.task-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.task-content {
+    background: #f9f9f9;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.task-content h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.task-description {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 25px 0;
+    padding: 25px;
+    background: white;
+    border-radius: 15px;
+    border-left: 5px solid #667eea;
+    word-wrap: break-word;
+    overflow-x: hidden;
+}
+
+.requirements-section,
+.hint-section,
+.console-section {
+    margin-top: 30px;
+    padding: 25px;
+    background: white;
+    border-radius: 15px;
+    overflow-x: hidden;
+}
+
+.requirements-section h3,
+.hint-section h3,
+.console-section h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.requirements-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.requirements-list li {
+    padding: 10px 0 10px 30px;
+    position: relative;
+    word-wrap: break-word;
+    font-size: 16px;
+}
+
+.requirements-list li:before {
+    content: "✓";
+    color: #667eea;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.console-section pre {
+    background: #2d2d2d;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* ========== МОДАЛЬНОЕ ОКНО ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: #667eea;
+}
+
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.material-link {
+    display: block;
+    padding: 15px;
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.material-link:hover {
+    background: #667eea;
+    color: white;
+    border-left-color: #ffffff;
+}
+
+.material-title {
+    font-weight: 600;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.material-desc {
+    font-size: 14px;
+    color: #666;
+    display: block;
+}
+
+.material-link:hover .material-desc {
+    color: rgba(255,255,255,0.9);
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 1024px) {
+    .marathon-header-content {
+        padding: 0 15px;
+    }
+    
+    .header-center {
+        gap: 10px;
+    }
+    
+    .task-indicator {
+        font-size: 16px;
+        padding: 6px 15px;
+    }
+    
+    .task-id {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .setup-container {
+        margin: 20px;
+        padding: 25px;
+    }
+    
+    .difficulty-select {
+        width: 100px;
+        padding: 12px;
+        font-size: 16px;
+    }
+    
+    .stepper-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+    }
+    
+    .stepper-value {
+        font-size: 24px;
+        min-width: 50px;
+    }
+    
+    /* Мобильный хедер */
+    .marathon-header-content {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    #marathon-screen {
+        padding-top: 160px;
+    }
+    
+    .header-left, .header-center, .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .header-right {
+        flex-wrap: wrap;
+    }
+    
+    .task-content {
+        padding: 25px;
+    }
+    
+    .task-content h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tags-actions {
+        flex-direction: column;
+    }
+    
+    .btn-small {
+        width: 100%;
+    }
+    
+    .difficulty-range {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .difficulty-select {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .center-content {
+        gap: 15px;
+    }
+    
+    .stepper-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .stepper-value {
+        font-size: 22px;
+        min-width: 40px;
+    }
+    
+    .marathon-header-content {
+        padding: 12px;
+    }
+    
+    .task-indicator {
+        font-size: 14px;
+        padding: 5px 12px;
+    }
+    
+    .nav-btn-small {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+/* Заголовок задания с ID в тултипе */
+.task-title-with-id {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 28px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    display: inline-block;
+    position: relative;
+    cursor: help;
+}
+
+.task-title-with-id:hover {
+    border-bottom-color: #667eea;
+}
+
+/* Кастомный тултип */
+.task-title-with-id[data-id]:hover:after {
+    content: "ID: " attr(data-id);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: normal;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    margin-top: 8px;
+    z-index: 100;
+    pointer-events: none;
+    animation: fadeIn 0.2s ease;
+}
+
+/* Стрелочка для тултипа */
+.task-title-with-id[data-id]:hover:before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 100%;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #764ba2 transparent;
+    margin-top: -4px;
+    z-index: 101;
+    pointer-events: none;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* На мобильных устройствах показываем ID постоянно или по долгому нажатию */
+@media (max-width: 768px) {
+    .task-title-with-id[data-id]:active:after {
+        content: "ID: " attr(data-id);
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 40px;
+        font-size: 16px;
+        white-space: nowrap;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        z-index: 1000;
+        animation: slideUp 0.3s ease;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Убираем старый task-id-display */
+.task-id {
+    display: none;
+}
