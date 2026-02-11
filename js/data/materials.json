@@ -1,0 +1,24 @@
+{
+  "materialsByTag": [
+    {
+      "tag": "арифметика",
+      "materials": [
+        {
+          "title": "Арифметические операции в C#",
+          "url": "https://metanit.com/sharp/tutorial/2.4.php",
+          "description": "Основные арифметические операции и операторы"
+        }
+      ]
+    },
+    {
+      "tag": "массивы",
+      "materials": [
+        {
+          "title": "Массивы в C#",
+          "url": "https://metanit.com/sharp/tutorial/3.1.php",
+          "description": "Одномерные и многомерные массивы"
+        }
+      ]
+    }
+  ]
+}
