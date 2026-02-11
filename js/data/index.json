@@ -1,0 +1,67 @@
+{
+  "course": "C# для начинающих",
+  "version": "2.0",
+  "lastUpdated": "2026-02-11",
+  "topics": [
+    {
+      "id": 1,
+      "tag": "типы данных",
+      "name": "Типы данных",
+      "file": "datatypes.json"
+    },
+    {
+      "id": 2,
+      "tag": "условия if-else",
+      "name": "Условия if-else",
+      "file": "ifelse.json"
+    },
+    {
+      "id": 3,
+      "tag": "условия switch",
+      "name": "Условия switch",
+      "file": "switch.json"
+    },
+    {
+      "id": 4,
+      "tag": "тернарный оператор",
+      "name": "Тернарный оператор",
+      "file": "ternary.json"
+    },
+    {
+      "id": 5,
+      "tag": "цикл for",
+      "name": "Цикл for",
+      "file": "for.json"
+    },
+    {
+      "id": 6,
+      "tag": "цикл while",
+      "name": "Цикл while",
+      "file": "while.json"
+    },
+    {
+      "id": 7,
+      "tag": "цикл do while",
+      "name": "Цикл do while",
+      "file": "dowhile.json"
+    },
+    {
+      "id": 8,
+      "tag": "массивы",
+      "name": "Массивы",
+      "file": "arrays.json"
+    },
+    {
+      "id": 9,
+      "tag": "многомерные массивы",
+      "name": "Многомерные массивы",
+      "file": "multidimensional_arrays.json"
+    },
+    {
+      "id": 10,
+      "tag": "зубчатые массивы",
+      "name": "зубчатые массивы",
+      "file": "jagged_arrays.json"
+    }
+  ]
+}

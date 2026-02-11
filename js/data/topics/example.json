@@ -1,0 +1,35 @@
+{
+  "tag": "example",
+  "name": "Образец",
+  "description": "Описание образца",
+  "totalTasks": 999,
+  "difficultyLevels": [
+    {
+      "level": 1,
+      "tasks": [
+        {
+          "id": 999,
+          "title": "Заголовок",
+          "description": "Напишите программу",
+          "requirements": [
+            "Требование 1",
+            "Требование 2",
+            "Требование 3"
+          ],
+          "hint": "Подсказка",
+          "exampleConsoleOutput": "Вывод\nВ консоль"
+        },
+        {
+          "id": 0,
+          "title": "",
+          "description": "",
+          "requirements": [
+            ""
+          ],
+          "hint": "",
+          "exampleConsoleOutput": ""
+        }
+      ]
+    }
+  ]
+}

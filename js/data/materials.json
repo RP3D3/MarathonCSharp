@@ -1,0 +1,124 @@
+{
+  "materialsByTag": [
+    {
+      "tag": "типы данных",
+      "materials": [
+        {
+          "title": "Типы данных в C#",
+          "url": "https://metanit.com/sharp/tutorial/2.1.php",
+          "description": "Целочисленные, вещественные, логический, символьный типы. Значения по умолчанию и допустимые диапазоны"
+        },
+        {
+          "title": "Преобразование типов",
+          "url": "https://metanit.com/sharp/tutorial/2.2.php",
+          "description": "Явное и неявное преобразование, Convert и Parse, TryParse и проверка ввода"
+        }
+      ]
+    },
+    {
+      "tag": "условия if-else",
+      "materials": [
+        {
+          "title": "Условные конструкции if/else",
+          "url": "https://metanit.com/sharp/tutorial/2.5.php",
+          "description": "Полная и сокращенная форма if, else if, вложенные условия, логические операторы И (&&) и ИЛИ (||)"
+        }
+      ]
+    },
+    {
+      "tag": "условия switch",
+      "materials": [
+        {
+          "title": "Конструкция switch",
+          "url": "https://metanit.com/sharp/tutorial/3.45.php",
+          "description": "Классический switch, множественные case, default. Сравнение с if/else"
+        }
+      ]
+    },
+    {
+      "tag": "тернарный оператор",
+      "materials": [
+        {
+          "title": "Тернарный оператор",
+          "url": "https://metanit.com/sharp/tutorial/2.5.php#:~:text=%D0%9D%D0%B5%D0%B8%D0%B7%D0%B2%D0%B5%D1%81%D1%82%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%BC%D1%8F%22)%3B-,%D0%A2%D0%B5%D1%80%D0%BD%D0%B0%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F,-%D0%A2%D0%B5%D1%80%D0%BD%D0%B0%D1%80%D0%BD%D1%83%D1%8E%20%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F%20%D1%82%D0%B0%D0%BA%D0%B6%D0%B5",
+          "description": "Синтаксис ?:, вложенные тернарные операторы, присваивание значений по условию (раздел в конце статьи)"
+        }
+      ]
+    },
+    {
+      "tag": "цикл for",
+      "materials": [
+        {
+          "title": "Циклы for, while, do while",
+          "url": "https://metanit.com/sharp/tutorial/2.6.php",
+          "description": "Синтаксис и применение всех видов циклов, вложенные циклы, бесконечные циклы"
+        },
+        {
+          "title": "Операторы break, continue, return",
+          "url": "https://metanit.com/sharp/tutorial/2.6.php#:~:text=%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D1%8B%20continue%20%D0%B8%20break",
+          "description": "Досрочный выход из цикла, пропуск итерации, выход из метода"
+        }
+      ]
+    },
+    {
+      "tag": "цикл while",
+      "materials": [
+        {
+          "title": "Циклы for, while, do while",
+          "url": "https://metanit.com/sharp/tutorial/2.6.php",
+          "description": "Синтаксис и применение всех видов циклов, вложенные циклы, бесконечные циклы"
+        },
+        {
+          "title": "Операторы break, continue, return",
+          "url": "https://metanit.com/sharp/tutorial/2.6.php#:~:text=%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D1%8B%20continue%20%D0%B8%20break",
+          "description": "Досрочный выход из цикла, пропуск итерации, выход из метода"
+        }
+      ]
+    },
+    {
+      "tag": "цикл do while",
+      "materials": [
+        {
+          "title": "Циклы for, while, do while",
+          "url": "https://metanit.com/sharp/tutorial/2.6.php",
+          "description": "Синтаксис и применение всех видов циклов, вложенные циклы, бесконечные циклы"
+        },
+        {
+          "title": "Операторы break, continue, return",
+          "url": "https://metanit.com/sharp/tutorial/2.6.php#:~:text=%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D1%8B%20continue%20%D0%B8%20break",
+          "description": "Досрочный выход из цикла, пропуск итерации, выход из метода"
+        }
+      ]
+    },
+    {
+      "tag": "массивы",
+      "materials": [
+        {
+          "title": "Массивы в C#",
+          "url": "https://metanit.com/sharp/tutorial/2.4.php",
+          "description": "Одномерные массивы: создание, инициализация, индексы, свойство Length, перебор элементов"
+        }
+      ]
+    },
+    {
+      "tag": "многомерные массивы",
+      "materials": [
+        {
+          "title": "Многомерные массивы",
+          "url": "https://metanit.com/sharp/tutorial/2.4.php#:~:text=%7D-,%D0%9C%D0%BD%D0%BE%D0%B3%D0%BE%D0%BC%D0%B5%D1%80%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D1%8B,-%D0%9C%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D1%8B%20%D1%85%D0%B0%D1%80%D0%B0%D0%BA%D1%82%D0%B5%D1%80%D0%B8%D0%B7%D1%83%D1%8E%D1%82%D1%81%D1%8F%20%D1%82%D0%B0%D0%BA%D0%B8%D0%BC",
+          "description": "Прямоугольные массивы (int[,]), обход элементов, GetUpperBound, работа со строками и столбцами (раздел 'Многомерные массивы')"
+        }
+      ]
+    },
+    {
+      "tag": "зубчатые массивы",
+      "materials": [
+        {
+          "title": "Массив массивов (зубчатые массивы)",
+          "url": "https://metanit.com/sharp/tutorial/2.4.php#:~:text=4%095%096-,%D0%9C%D0%B0%D1%81%D1%81%D0%B8%D0%B2%20%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%BE%D0%B2,-%D0%9E%D1%82%20%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D0%BC%D0%B5%D1%80%D0%BD%D1%8B%D1%85%20%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%BE%D0%B2",
+          "description": "Jagged arrays: int[][], разная длина строк, создание и инициализация, перебор вложенными циклами (раздел 'Массив массивов')"
+        }
+      ]
+    }
+  ]
+}
