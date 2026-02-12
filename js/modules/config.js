@@ -1,8 +1,8 @@
 // Конфигурация приложения
 export const CONFIG = {
     APP_NAME: 'C# Marathon',
-    VERSION: '1.0.0',
-    DATA_VERSION: '1.0.7',
+    VERSION: '1.0.1',
+    DATA_VERSION: '1.0.8',
     // Пути к данным
     DATA_PATHS: {
         INDEX: './js/data/index.json',
@@ -12,15 +12,14 @@ export const CONFIG = {
     
     // Настройки по умолчанию
     DEFAULTS: {
-        DIFFICULTY_FROM: 1,
-        DIFFICULTY_TO: 3,
+        DIFFICULTY: 1,
         TASK_COUNT: 5,
         MAX_TASK_COUNT: 30, // Увеличили с 20 до 30
         MIN_TASK_COUNT: 1
     },
     
     // Пресеты количества заданий (для быстрого выбора)
-    TASK_COUNT_PRESETS: [1, 3, 5, 10, 15, 20, 30],
+    TASK_COUNT_PRESETS: [1, 2, 3, 5, 10, 15, 20, 25, 30],
     
     // Ключи для localStorage
     STORAGE_KEYS: {
