@@ -18,25 +18,25 @@ class UIManager {
     this.cacheElements();
     this.attachEvents();
     await this.loadTopics();
-    
+
     // Сбрасываем все теги после загрузки
     setTimeout(() => {
-        this.deselectAllTags();
+      this.deselectAllTags();
     }, 50);
-    
+
     this.loadHistory();
     this.loadLastSettings();
-    
+
     // Инициализируем слайдер
     if (this.elements.setup.taskCountSlider) {
-        this.elements.setup.taskCountSlider.max = CONFIG.DEFAULTS.MAX_TASK_COUNT;
+      this.elements.setup.taskCountSlider.max = CONFIG.DEFAULTS.MAX_TASK_COUNT;
     }
-    
+
     // Обновляем отображение максимального количества
     if (this.elements.setup.taskCountMax) {
-        this.elements.setup.taskCountMax.textContent = `/ ${CONFIG.DEFAULTS.MAX_TASK_COUNT}`;
+      this.elements.setup.taskCountMax.textContent = `/ ${CONFIG.DEFAULTS.MAX_TASK_COUNT}`;
     }
-}
+  }
 
   // Кэширование DOM элементов
   cacheElements() {
@@ -51,6 +51,8 @@ class UIManager {
         taskCountMinus: document.getElementById("task-count-minus"),
         taskCountPlus: document.getElementById("task-count-plus"),
         taskCountSlider: document.getElementById("task-count-slider"),
+        difficultyBtns: document.querySelectorAll(".difficulty-btn"),
+        selectedDifficulty: document.getElementById("selected-difficulty"),
         presetBtns: document.querySelectorAll(".preset-btn"),
         taskCountMax: document.querySelector(".task-count-max"),
         tagsContainer: document.getElementById("tags-container"),
@@ -111,7 +113,15 @@ class UIManager {
         this.selectAllTags(),
       );
     }
-
+    // Кнопки сложности
+    if (this.elements.setup.difficultyBtns) {
+      this.elements.setup.difficultyBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const level = parseInt(btn.dataset.level);
+          this.setDifficulty(level);
+        });
+      });
+    }
     if (this.elements.setup.deselectAllTagsBtn) {
       this.elements.setup.deselectAllTagsBtn.addEventListener("click", () =>
         this.deselectAllTags(),
@@ -274,39 +284,59 @@ class UIManager {
       }
     });
   }
-// Новый метод для обновления количества заданий
-updateTaskCount(count) {
+  setDifficulty(level) {
+    // Обновляем скрытое поле
+    if (this.elements.setup.selectedDifficulty) {
+      this.elements.setup.selectedDifficulty.value = level;
+    }
+
+    // Обновляем активный класс у кнопок
+    if (this.elements.setup.difficultyBtns) {
+      this.elements.setup.difficultyBtns.forEach((btn) => {
+        const btnLevel = parseInt(btn.dataset.level);
+        if (btnLevel === level) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+  }
+  // Новый метод для обновления количества заданий
+  updateTaskCount(count) {
     // Проверяем границы
-    count = Math.max(CONFIG.DEFAULTS.MIN_TASK_COUNT, 
-                    Math.min(CONFIG.DEFAULTS.MAX_TASK_COUNT, count));
-    
+    count = Math.max(
+      CONFIG.DEFAULTS.MIN_TASK_COUNT,
+      Math.min(CONFIG.DEFAULTS.MAX_TASK_COUNT, count),
+    );
+
     // Обновляем отображение
     if (this.elements.setup.taskCountValue) {
-        this.elements.setup.taskCountValue.textContent = count;
+      this.elements.setup.taskCountValue.textContent = count;
     }
-    
+
     // Обновляем слайдер
     if (this.elements.setup.taskCountSlider) {
-        this.elements.setup.taskCountSlider.value = count;
+      this.elements.setup.taskCountSlider.value = count;
     }
-    
+
     // Обновляем активный пресет
     this.updateActivePreset(count);
-}
+  }
 
-// Обновление активного пресета
-updateActivePreset(count) {
+  // Обновление активного пресета
+  updateActivePreset(count) {
     if (!this.elements.setup.presetBtns) return;
-    
-    this.elements.setup.presetBtns.forEach(btn => {
-        const btnCount = parseInt(btn.dataset.count);
-        if (btnCount === count) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
+
+    this.elements.setup.presetBtns.forEach((btn) => {
+      const btnCount = parseInt(btn.dataset.count);
+      if (btnCount === count) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
     });
-}
+  }
   // Валидация диапазона сложности
   validateDifficultyRange() {
     if (
@@ -491,7 +521,7 @@ updateActivePreset(count) {
                 <div class="date">${entry.date}</div>
                 <div class="main-info">${entry.lastname}</div>
                 <div>Теги: ${entry.tags.join(", ")}</div>
-                <div>Сложность: ${entry.difficultyFrom}-${entry.difficultyTo}</div>
+                <div>Сложность: ${entry.difficulty || 1}</div>
                 <div>Заданий: ${entry.taskCount} (ID: ${entry.taskIds.join(", ")})</div>
             `;
 
@@ -552,7 +582,6 @@ updateActivePreset(count) {
 
   // Загрузка последних настроек - ИСПРАВЛЕНО!
   loadLastSettings() {
-    // СНАЧАЛА сбрасываем все теги (по умолчанию ничего не выбрано)
     this.deselectAllTags();
     
     const settings = storage.loadLastSettings();
@@ -561,12 +590,12 @@ updateActivePreset(count) {
             this.elements.setup.lastname.value = settings.lastname || '';
         }
         
-        if (settings.difficultyFrom && this.elements.setup.difficultyFrom) {
-            this.elements.setup.difficultyFrom.value = settings.difficultyFrom;
-        }
-        
-        if (settings.difficultyTo && this.elements.setup.difficultyTo) {
-            this.elements.setup.difficultyTo.value = settings.difficultyTo;
+        // Восстанавливаем сложность
+        if (settings.difficulty && this.elements.setup.difficultyBtns) {
+            this.setDifficulty(settings.difficulty);
+        } else {
+            // По умолчанию сложность 1
+            this.setDifficulty(CONFIG.DEFAULTS.DIFFICULTY || 1);
         }
         
         // Восстанавливаем количество заданий
@@ -574,7 +603,7 @@ updateActivePreset(count) {
             this.updateTaskCount(settings.taskCount);
         }
         
-        // Восстанавливаем выбранные теги
+        // Восстанавливаем теги
         if (settings.tags && settings.tags.length > 0 && this.elements.setup.tagsContainer) {
             setTimeout(() => {
                 settings.tags.forEach(tagInfo => {
@@ -590,92 +619,81 @@ updateActivePreset(count) {
             }, 100);
         }
     } else {
-        // Если нет сохраненных настроек, устанавливаем пресет 5 активным
-        this.updateActivePreset(CONFIG.DEFAULTS.TASK_COUNT);
+        // Если нет настроек, ставим сложность 1
+        this.setDifficulty(CONFIG.DEFAULTS.DIFFICULTY || 1);
     }
 }
-
   // Начать марафон
   // Начать марафон - добавим уведомление если заданий меньше чем запрошено
   async startMarathon() {
-    if (
-      !this.elements.setup.lastname ||
-      !this.elements.setup.lastname.value.trim()
-    ) {
-      this.showError("Введите фамилию");
-      return;
+    if (!this.elements.setup.lastname || !this.elements.setup.lastname.value.trim()) {
+        this.showError('Введите фамилию');
+        return;
     }
-
+    
     const selectedTags = this.getSelectedTags();
     if (selectedTags.length === 0) {
-      this.showError("Выберите хотя бы один тег");
-      return;
+        this.showError('Выберите хотя бы один тег');
+        return;
     }
-
+    
+    // Получаем выбранную сложность
+    const difficulty = parseInt(this.elements.setup.selectedDifficulty?.value || 1);
+    
     try {
-      this.showLoading();
-
-      const settings = {
-        lastname: this.elements.setup.lastname.value.trim(),
-        tags: selectedTags,
-        difficultyFrom: parseInt(
-          this.elements.setup.difficultyFrom?.value || 1,
-        ),
-        difficultyTo: parseInt(this.elements.setup.difficultyTo?.value || 3),
-        taskCount: parseInt(
-          this.elements.setup.taskCountValue?.textContent || 5,
-        ),
-      };
-
-      const tasks = await marathon.loadTasks(
-        settings.tags,
-        settings.difficultyFrom,
-        settings.difficultyTo,
-        settings.taskCount,
-      );
-
-      if (tasks && tasks.length > 0) {
-        // Проверяем, сколько заданий реально загружено
-        if (tasks.length < settings.taskCount) {
-          this.showMessage(
-            `⚠️ Доступно только ${tasks.length} заданий для выбранных параметров.\n` +
-              `Марафон будет состоять из ${tasks.length} заданий.`,
-          );
+        this.showLoading();
+        
+        const settings = {
+            lastname: this.elements.setup.lastname.value.trim(),
+            tags: selectedTags,
+            difficulty: difficulty, // Только одно число!
+            taskCount: parseInt(this.elements.setup.taskCountValue?.textContent || CONFIG.DEFAULTS.TASK_COUNT)
+        };
+        
+        // Загружаем задания ТОЛЬКО этого уровня сложности
+        const tasks = await marathon.loadTasks(
+            settings.tags,
+            settings.difficulty,  // from
+            settings.difficulty,  // to - то же самое!
+            settings.taskCount
+        );
+        
+        if (tasks && tasks.length > 0) {
+            if (tasks.length < settings.taskCount) {
+                this.showMessage(
+                    `⚠️ Доступно только ${tasks.length} заданий ${settings.difficulty} уровня сложности.\n` +
+                    `Марафон будет состоять из ${tasks.length} заданий.`
+                );
+            }
+            
+            marathon.setTasks(tasks);
+            marathon.setCurrentTask(0);
+            marathon.setSettings(settings);
+            
+            const taskIds = tasks.map(t => t.id);
+            storage.addHistoryEntry({
+                ...settings,
+                tags: settings.tags.map(t => t.tag),
+                taskIds: taskIds,
+                taskCount: tasks.length,
+                difficulty: settings.difficulty
+            });
+            
+            storage.saveLastSettings(settings);
+            
+            this.updateMarathonUI();
+            this.switchScreen('marathon');
+            this.loadHistory();
+        } else {
+            this.showError(`Нет заданий ${difficulty} уровня сложности для выбранных тегов`);
         }
-
-        marathon.setTasks(tasks);
-        marathon.setCurrentTask(0);
-        marathon.setSettings({
-          ...settings,
-          taskCount: tasks.length, // Сохраняем реальное количество
-        });
-
-        const taskIds = tasks.map((t) => t.id);
-        storage.addHistoryEntry({
-          ...settings,
-          tags: settings.tags.map((t) => t.tag),
-          taskIds: taskIds,
-          taskCount: tasks.length, // В истории тоже реальное количество
-        });
-
-        storage.saveLastSettings({
-          ...settings,
-          taskCount: tasks.length,
-        });
-
-        this.updateMarathonUI();
-        this.switchScreen("marathon");
-        this.loadHistory();
-      } else {
-        this.showError("Нет заданий для выбранных параметров");
-      }
     } catch (error) {
-      console.error("Ошибка запуска марафона:", error);
-      this.showError("Не удалось загрузить задания");
+        console.error('Ошибка запуска марафона:', error);
+        this.showError('Не удалось загрузить задания');
     } finally {
-      this.hideLoading();
+        this.hideLoading();
     }
-  }
+}
 
   // Новый метод для обработки нажатия на следующее задание
   handleNextTask() {
