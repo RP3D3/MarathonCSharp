@@ -1352,3 +1352,60 @@ input[type="text"]:focus {
 .task-id {
     display: none;
 }
+/* Кнопки выбора сложности */
+.difficulty-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.difficulty-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    border: 3px solid transparent;
+    font-size: 28px;
+    font-weight: 700;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.difficulty-btn:hover {
+    transform: scale(1.1);
+    background: #e0e0e0;
+}
+
+.difficulty-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #fff;
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .difficulty-buttons {
+        gap: 15px;
+    }
+    
+    .difficulty-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .difficulty-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+    }
+}
