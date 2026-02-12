@@ -26,6 +26,7 @@ class UIManager {
 
     this.loadHistory();
     this.loadLastSettings();
+    this.initMobileHeader();
 
     // Инициализируем слайдер
     if (this.elements.setup.taskCountSlider) {
@@ -361,7 +362,7 @@ class UIManager {
     this.elements.screens.marathon.classList.remove("active");
     this.elements.screens[screen].classList.add("active");
     this.currentScreen = screen;
-    //  СБРАСЫВАЕМ СКРОЛЛ ПРИ ПЕРЕКЛЮЧЕНИИ
+    // 🔥 СБРАСЫВАЕМ СКРОЛЛ ПРИ ПЕРЕКЛЮЧЕНИИ
     window.scrollTo({
         top: 0,
         left: 0,
@@ -373,7 +374,36 @@ class UIManager {
         this.elements.screens[screen].scrollTop = 0;
     }
   }
-
+initMobileHeader() {
+    const header = document.querySelector('.marathon-header-fixed');
+    if (!header) return;
+    
+    let lastScrollTop = 0;
+    const scrollThreshold = 10; // Минимальное движение для срабатывания
+    
+    window.addEventListener('scroll', () => {
+        // Только на мобильных устройствах
+        if (window.innerWidth > 768) return;
+        
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Скролл вниз
+        if (currentScroll > lastScrollTop + scrollThreshold) {
+            header.classList.add('header-hidden');
+        } 
+        // Скролл вверх
+        else if (currentScroll < lastScrollTop - scrollThreshold) {
+            header.classList.remove('header-hidden');
+        }
+        
+        // Если в самом верху - всегда показываем
+        if (currentScroll <= 0) {
+            header.classList.remove('header-hidden');
+        }
+        
+        lastScrollTop = currentScroll;
+    });
+}
   // Загрузка тегов
   async loadTopics() {
     try {
@@ -1012,4 +1042,3 @@ class UIManager {
 }
 
 export const ui = new UIManager();
-
