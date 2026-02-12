@@ -361,6 +361,17 @@ class UIManager {
     this.elements.screens.marathon.classList.remove("active");
     this.elements.screens[screen].classList.add("active");
     this.currentScreen = screen;
+    //  СБРАСЫВАЕМ СКРОЛЛ ПРИ ПЕРЕКЛЮЧЕНИИ
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant' // 'smooth' если хотите с анимацией
+    });
+    
+    // Для мобильных устройств - скролл самого экрана
+    if (this.elements.screens[screen]) {
+        this.elements.screens[screen].scrollTop = 0;
+    }
   }
 
   // Загрузка тегов
@@ -1001,3 +1012,4 @@ class UIManager {
 }
 
 export const ui = new UIManager();
+
