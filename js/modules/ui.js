@@ -741,22 +741,29 @@ initMobileHeader() {
     const currentIndex = marathon.getCurrentIndex();
     const totalTasks = marathon.getTotalTasks();
     const task = marathon.getCurrentTask();
-
+    
     // Если это не последнее задание
     if (currentIndex < totalTasks - 1) {
-      // Проверяем, копировали ли уже это задание
-      if (task && this.copiedTasks.has(task.id)) {
-        // Задание уже копировали - показываем упрощенную версию
-        this.showInstruction(true);
-      } else {
-        // Задание еще не копировали - показываем полную версию
-        this.showInstruction(false);
-      }
+        // 🔥 ПРОВЕРКА: мобильное устройство или десктоп
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            // 📱 На мобильных - сразу переходим без проверки
+            console.log('Мобильное устройство: переход без проверки');
+            marathon.nextTask();
+        } else {
+            // 💻 На десктопе - проверяем копирование
+            if (task && this.copiedTasks.has(task.id)) {
+                this.showInstruction(true);
+            } else {
+                this.showInstruction(false);
+            }
+        }
     } else {
-      // Последнее задание - просто переходим
-      marathon.nextTask();
+        // Последнее задание - просто переходим
+        marathon.nextTask();
     }
-  }
+}
 
   // Показать инструкцию (с параметром wasCopied)
   showInstruction(wasCopied = false) {
@@ -1042,3 +1049,4 @@ initMobileHeader() {
 }
 
 export const ui = new UIManager();
+
