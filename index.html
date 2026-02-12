@@ -47,19 +47,11 @@
 
           <div class="form-group">
             <label>Сложность:</label>
-            <div class="difficulty-range">
-              <select id="difficulty-from" class="difficulty-select">
-                <option value="1"  selected>1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-              <span class="difficulty-separator">—</span>
-              <select id="difficulty-to" class="difficulty-select">
-                <option value="1">1</option>
-                <option value="2" selected>2</option>
-                <option value="3">3</option>
-              </select>
-            </div>
+    <div class="difficulty-buttons">
+        <button type="button" class="difficulty-btn" data-level="1">1</button>
+        <button type="button" class="difficulty-btn" data-level="2">2</button>
+    </div>
+    <input type="hidden" id="selected-difficulty" value="1">
           </div>
 
           <div class="form-group">
@@ -68,23 +60,25 @@
             <!-- Пресеты для быстрого выбора -->
             <div class="task-presets">
               <button class="preset-btn" data-count="1">1</button>
+              <button class="preset-btn" data-count="2">2</button>
               <button class="preset-btn" data-count="3">3</button>
               <button class="preset-btn" data-count="5">5</button>
               <button class="preset-btn" data-count="10">10</button>
               <button class="preset-btn" data-count="15">15</button>
               <button class="preset-btn" data-count="20">20</button>
+              <button class="preset-btn" data-count="25">25</button>
               <button class="preset-btn" data-count="30">30</button>
             </div>
 
             <!-- Степпер для точной настройки -->
-            <div class="task-count-control center-content">
+            <!-- <div class="task-count-control center-content">
               <button id="task-count-minus" class="stepper-btn">−</button>
               <div class="task-count-display">
                 <span id="task-count-value" class="stepper-value">5</span>
                 <span class="task-count-max">/ 30</span>
               </div>
               <button id="task-count-plus" class="stepper-btn">+</button>
-            </div>
+            </div> -->
 
             
           </div>
