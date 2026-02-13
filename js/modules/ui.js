@@ -2,6 +2,7 @@ import { CONFIG } from "./config.js";
 import { storage } from "./storage.js";
 import { marathon } from "./marathon.js";
 import { docManager } from "./documentation.js";
+import { taskManager } from './tasks.js';
 
 // Управление интерфейсом
 class UIManager {
@@ -749,7 +750,55 @@ initMobileHeader() {
         this.hideLoading();
     }
 }
-
+// Сброс скролла везде
+resetScroll() {
+    // 1. Основное окно
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant'  // Мгновенно, без анимации
+    });
+    
+    // 2. Все экраны
+    if (this.elements.screens.setup) {
+        this.elements.screens.setup.scrollTop = 0;
+    }
+    if (this.elements.screens.marathon) {
+        this.elements.screens.marathon.scrollTop = 0;
+    }
+    
+    // 3. Контейнер заданий
+    const taskContainer = document.querySelector('.task-container');
+    if (taskContainer) {
+        taskContainer.scrollTop = 0;
+    }
+    
+    // 4. Контейнер истории
+    const historyList = document.querySelector('.history-list');
+    if (historyList) {
+        historyList.scrollTop = 0;
+    }
+    
+    // 5. Фиксированный хедер (сбрасываем его состояние)
+    const header = document.querySelector('.marathon-header-fixed');
+    if (header) {
+        header.classList.remove('header-hidden');
+    }
+    
+    // 6. Модальные окна
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (modal) {
+            modal.scrollTop = 0;
+        }
+    });
+    
+    // 7. Body и HTML
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    
+    console.log('🔄 Скролл сброшен');
+}
   // Новый метод для обработки нажатия на следующее задание
 handleNextTask() {
     const currentIndex = marathon.getCurrentIndex();
