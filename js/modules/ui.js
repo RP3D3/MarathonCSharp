@@ -137,56 +137,25 @@ class UIManager {
     }
 
     // Валидация диапазона сложности
-    if (this.elements.setup.difficultyFrom) {
-      this.elements.setup.difficultyFrom.addEventListener("change", () =>
-        this.validateDifficultyRange(),
-      );
-    }
-
-    if (this.elements.setup.difficultyTo) {
-      this.elements.setup.difficultyTo.addEventListener("change", () =>
-        this.validateDifficultyRange(),
-      );
-    }
-
-    if (this.elements.setup.taskCountMinus) {
-      this.elements.setup.taskCountMinus.addEventListener("click", () => {
-        const current = parseInt(
-          this.elements.setup.taskCountValue.textContent,
-        );
-        if (current > CONFIG.DEFAULTS.MIN_TASK_COUNT) {
-          this.updateTaskCount(current - 1);
-        }
-      });
-    }
-
-    if (this.elements.setup.taskCountPlus) {
-      this.elements.setup.taskCountPlus.addEventListener("click", () => {
-        const current = parseInt(
-          this.elements.setup.taskCountValue.textContent,
-        );
-        if (current < CONFIG.DEFAULTS.MAX_TASK_COUNT) {
-          this.updateTaskCount(current + 1);
-        }
-      });
-    }
-
-    // Слайдер количества заданий
-    if (this.elements.setup.taskCountSlider) {
-      this.elements.setup.taskCountSlider.addEventListener("input", (e) => {
-        this.updateTaskCount(parseInt(e.target.value));
-      });
-    }
+    
 
     // Пресеты количества заданий
     if (this.elements.setup.presetBtns) {
-      this.elements.setup.presetBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const count = parseInt(btn.dataset.count);
-          this.updateTaskCount(count);
+    this.elements.setup.presetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const count = parseInt(btn.dataset.count);
+            this.updateTaskCount(count);
+            
+            // 🔥 ВАЖНО: сохраняем выбранное значение в скрытое поле или data-атрибут
+            if (this.elements.setup.taskCountValue) {
+                this.elements.setup.taskCountValue.textContent = count;
+            }
+            
+            // Обновляем активный класс
+            this.updateActivePreset(count);
         });
-      });
-    }
+    });
+}
 
     // Кнопка очистки истории
     if (this.elements.setup.clearHistoryBtn) {
@@ -307,24 +276,37 @@ class UIManager {
   // Новый метод для обновления количества заданий
   updateTaskCount(count) {
     // Проверяем границы
-    count = Math.max(
-      CONFIG.DEFAULTS.MIN_TASK_COUNT,
-      Math.min(CONFIG.DEFAULTS.MAX_TASK_COUNT, count),
-    );
-
-    // Обновляем отображение
+    count = Math.max(CONFIG.DEFAULTS.MIN_TASK_COUNT, 
+                    Math.min(CONFIG.DEFAULTS.MAX_TASK_COUNT, count));
+    
+    // 🔥 СОХРАНЯЕМ ЗНАЧЕНИЕ В НЕСКОЛЬКИХ МЕСТАХ ДЛЯ НАДЁЖНОСТИ
+    
+    // 1. В display элемент (если есть)
     if (this.elements.setup.taskCountValue) {
-      this.elements.setup.taskCountValue.textContent = count;
+        this.elements.setup.taskCountValue.textContent = count;
     }
-
-    // Обновляем слайдер
-    if (this.elements.setup.taskCountSlider) {
-      this.elements.setup.taskCountSlider.value = count;
+    
+    // 2. В скрытое поле (создадим его, если нет)
+    let hiddenInput = document.getElementById('selected-task-count');
+    if (!hiddenInput) {
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.id = 'selected-task-count';
+        hiddenInput.name = 'selected-task-count';
+        document.querySelector('.task-presets')?.appendChild(hiddenInput);
     }
-
-    // Обновляем активный пресет
+    hiddenInput.value = count;
+    
+    // 3. Обновляем активный пресет
     this.updateActivePreset(count);
-  }
+    
+    // 4. Сохраняем в настройках приложения
+    if (marathon.settings) {
+        marathon.settings.taskCount = count;
+    }
+    
+    console.log(`✅ Количество заданий установлено: ${count}`);
+}
 
   // Обновление активного пресета
   updateActivePreset(count) {
@@ -620,7 +602,8 @@ initMobileHeader() {
 }
 
   // Загрузка последних настроек - ИСПРАВЛЕНО!
-  loadLastSettings() {
+  // Загрузка последних настроек
+loadLastSettings() {
     this.deselectAllTags();
     
     const settings = storage.loadLastSettings();
@@ -629,15 +612,11 @@ initMobileHeader() {
             this.elements.setup.lastname.value = settings.lastname || '';
         }
         
-        // Восстанавливаем сложность
         if (settings.difficulty && this.elements.setup.difficultyBtns) {
             this.setDifficulty(settings.difficulty);
-        } else {
-            // По умолчанию сложность 1
-            this.setDifficulty(CONFIG.DEFAULTS.DIFFICULTY || 1);
         }
         
-        // Восстанавливаем количество заданий
+        // 🔥 ВОССТАНАВЛИВАЕМ КОЛИЧЕСТВО ЗАДАНИЙ
         if (settings.taskCount) {
             this.updateTaskCount(settings.taskCount);
         }
@@ -658,12 +637,13 @@ initMobileHeader() {
             }, 100);
         }
     } else {
-        // Если нет настроек, ставим сложность 1
+        // По умолчанию выбираем пресет 5
+        this.updateTaskCount(CONFIG.DEFAULTS.TASK_COUNT);
         this.setDifficulty(CONFIG.DEFAULTS.DIFFICULTY || 1);
     }
 }
-  // Начать марафон - добавим уведомление если заданий меньше чем запрошено
-  async startMarathon() {
+  // Начать марафон
+async startMarathon() {
     if (!this.elements.setup.lastname || !this.elements.setup.lastname.value.trim()) {
         this.showError('Введите фамилию');
         return;
@@ -675,8 +655,23 @@ initMobileHeader() {
         return;
     }
     
-    // Получаем выбранную сложность
     const difficulty = parseInt(this.elements.setup.selectedDifficulty?.value || 1);
+    
+    // 🔥 ПОЛУЧАЕМ КОЛИЧЕСТВО ЗАДАНИЙ ИЗ ПРЕСЕТА
+    let taskCount = CONFIG.DEFAULTS.TASK_COUNT;
+    
+    // 1. Пробуем получить из скрытого поля
+    const hiddenInput = document.getElementById('selected-task-count');
+    if (hiddenInput && hiddenInput.value) {
+        taskCount = parseInt(hiddenInput.value);
+    }
+    // 2. Пробуем получить из активного пресета
+    else {
+        const activePreset = document.querySelector('.preset-btn.active');
+        if (activePreset) {
+            taskCount = parseInt(activePreset.dataset.count);
+        }
+    }
     
     try {
         this.showLoading();
@@ -684,14 +679,15 @@ initMobileHeader() {
         const settings = {
             lastname: this.elements.setup.lastname.value.trim(),
             tags: selectedTags,
-            difficulty: difficulty,  // Одно число!
-            taskCount: parseInt(this.elements.setup.taskCountValue?.textContent || CONFIG.DEFAULTS.TASK_COUNT)
+            difficulty: difficulty,
+            taskCount: taskCount  // 🔥 ТЕПЕРЬ ТУТ ПРАВИЛЬНОЕ ЗНАЧЕНИЕ
         };
         
-        // 🔥 ПРОВЕРЯЕМ статистику с одним параметром
+        console.log('🚀 Запуск марафона с настройками:', settings);
+        
         const stats = await taskManager.getTasksStats(
             settings.tags,
-            settings.difficulty  // Только одно число!
+            settings.difficulty
         );
         
         if (stats && stats.total === 0) {
@@ -714,10 +710,9 @@ initMobileHeader() {
             this.updateTaskCount(stats.total);
         }
         
-        // 🔥 ЗАГРУЖАЕМ задания с одним параметром
         const tasks = await marathon.loadTasks(
             settings.tags,
-            settings.difficulty,  // Одно число!
+            settings.difficulty,
             settings.taskCount
         );
         
@@ -730,7 +725,7 @@ initMobileHeader() {
             storage.addHistoryEntry({
                 lastname: settings.lastname,
                 tags: settings.tags.map(t => t.tag),
-                difficulty: settings.difficulty,  // Одно число!
+                difficulty: settings.difficulty,
                 taskCount: tasks.length,
                 taskIds: taskIds,
                 date: new Date().toLocaleString()
