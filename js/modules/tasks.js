@@ -22,48 +22,44 @@ class TaskManager {
   }
 
   // Загрузка заданий по тегам и сложности
-  async loadTasks(
-    tags,
-    difficultyFrom,
-    difficultyTo,
-    count,
-    specificTaskIds = null,
-  ) {
+  async loadTasks(tags, difficulty, count, specificTaskIds = null) {
     try {
-      await this.loadTopicsIndex();
-
-      // Собираем задания из всех выбранных тегов
-      let allAvailableTasks = [];
-
-      for (const tagInfo of tags) {
-        const tagTasks = await this.loadTasksForTag(tagInfo);
-        const filteredTasks = tagTasks.filter(
-          (task) =>
-            task.difficulty >= difficultyFrom &&
-            task.difficulty <= difficultyTo,
-        );
-
-        allAvailableTasks = [...allAvailableTasks, ...filteredTasks];
-      }
-
-      if (allAvailableTasks.length === 0) {
-        console.error("Нет заданий для выбранных параметров");
-        return [];
-      }
-
-      // Если указаны конкретные ID заданий
-      if (specificTaskIds && specificTaskIds.length > 0) {
-        return this.selectSpecificTasks(allAvailableTasks, specificTaskIds);
-      }
-
-      // Иначе выбираем случайные задания
-      return this.selectRandomTasks(allAvailableTasks, count);
+        await this.loadTopicsIndex();
+        
+        // Собираем задания из всех выбранных тегов
+        let allAvailableTasks = [];
+        
+        for (const tagInfo of tags) {
+            const tagTasks = await this.loadTasksForTag(tagInfo);
+            
+            // 🔥 ИСПРАВЛЕНО: фильтруем ТОЛЬКО по одному уровню сложности
+            const filteredTasks = tagTasks.filter(task => 
+                task.difficulty === difficulty  // Прямое равенство!
+            );
+            
+            console.log(`Тег ${tagInfo.tag}: найдено ${filteredTasks.length} заданий ${difficulty} уровня`);
+            allAvailableTasks = [...allAvailableTasks, ...filteredTasks];
+        }
+        
+        if (allAvailableTasks.length === 0) {
+            console.error(`Нет заданий ${difficulty} уровня для выбранных тегов`);
+            return [];
+        }
+        
+        // Если указаны конкретные ID заданий
+        if (specificTaskIds && specificTaskIds.length > 0) {
+            return this.selectSpecificTasks(allAvailableTasks, specificTaskIds);
+        }
+        
+        // Иначе выбираем случайные задания
+        return this.selectRandomTasks(allAvailableTasks, count);
+        
     } catch (error) {
-      console.error("Ошибка загрузки заданий:", error);
-      throw error;
+        console.error('Ошибка загрузки заданий:', error);
+        throw error;
     }
-  }
-async getTasksStats(tags, difficultyFrom, difficultyTo) {
+}
+async getTasksStats(tags, difficulty) {
     try {
         await this.loadTopicsIndex();
         
@@ -72,15 +68,16 @@ async getTasksStats(tags, difficultyFrom, difficultyTo) {
         
         for (const tagInfo of tags) {
             const tagTasks = await this.loadTasksForTag(tagInfo);
+            
+            // 🔥 ИСПРАВЛЕНО: один уровень сложности
             const filteredTasks = tagTasks.filter(task => 
-                task.difficulty >= difficultyFrom && 
-                task.difficulty <= difficultyTo
+                task.difficulty === difficulty
             );
             
             statsByTag.push({
                 tag: tagInfo.tag,
                 available: filteredTasks.length,
-                difficultyRange: `${difficultyFrom}-${difficultyTo}`
+                difficulty: difficulty
             });
             
             totalAvailable += filteredTasks.length;
