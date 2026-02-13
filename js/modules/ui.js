@@ -575,51 +575,48 @@ initMobileHeader() {
   // Загрузка марафона из истории
   async loadMarathonFromHistory(entry) {
     try {
-      this.showLoading();
-
-      const selectedTags = entry.tags.map((tag) => ({ tag, file: null }));
-
-      selectedTags.forEach((tagItem) => {
-        const topic = this.topics.find((t) => t.tag === tagItem.tag);
-        if (topic) {
-          tagItem.file = topic.file;
-        }
-      });
-
-      const tasks = await marathon.loadTasks(
-        selectedTags,
-        entry.difficultyFrom,
-        entry.difficultyTo,
-        entry.taskCount,
-        entry.taskIds,
-      );
-
-      if (tasks && tasks.length > 0) {
-        marathon.setTasks(tasks);
-        marathon.setCurrentTask(0);
-        marathon.setSettings({
-          lastname: entry.lastname,
-          tags: selectedTags,
-          difficultyFrom: entry.difficultyFrom,
-          difficultyTo: entry.difficultyTo,
-          taskCount: entry.taskCount,
-          taskIds: entry.taskIds,
+        this.showLoading();
+        
+        const selectedTags = entry.tags.map(tag => ({ tag, file: null }));
+        
+        selectedTags.forEach(tagItem => {
+            const topic = this.topics.find(t => t.tag === tagItem.tag);
+            if (topic) {
+                tagItem.file = topic.file;
+            }
         });
-
-        // Сбрасываем историю копирований для нового марафона
-        this.copiedTasks.clear();
-
-        this.updateMarathonUI();
-        this.switchScreen("marathon");
-        this.closeInstruction();
-      }
+        
+        // 🔥 ИСПРАВЛЕНО: передаём ОДНО число difficulty
+        const tasks = await marathon.loadTasks(
+            selectedTags,
+            entry.difficulty || 1,  // Одно число!
+            entry.taskCount,
+            entry.taskIds
+        );
+        
+        if (tasks && tasks.length > 0) {
+            marathon.setTasks(tasks);
+            marathon.setCurrentTask(0);
+            marathon.setSettings({
+                lastname: entry.lastname,
+                tags: selectedTags,
+                difficulty: entry.difficulty || 1,  // Одно число!
+                taskCount: entry.taskCount,
+                taskIds: entry.taskIds
+            });
+            
+            this.copiedTasks.clear();
+            this.updateMarathonUI();
+            this.switchScreen('marathon');
+            this.closeInstruction();
+        }
     } catch (error) {
-      console.error("Ошибка загрузки марафона из истории:", error);
-      this.showError("Не удалось загрузить марафон из истории");
+        console.error('Ошибка загрузки марафона из истории:', error);
+        this.showError('Не удалось загрузить марафон из истории');
     } finally {
-      this.hideLoading();
+        this.hideLoading();
     }
-  }
+}
 
   // Загрузка последних настроек - ИСПРАВЛЕНО!
   loadLastSettings() {
@@ -664,7 +661,6 @@ initMobileHeader() {
         this.setDifficulty(CONFIG.DEFAULTS.DIFFICULTY || 1);
     }
 }
-  // Начать марафон
   // Начать марафон - добавим уведомление если заданий меньше чем запрошено
   async startMarathon() {
     if (!this.elements.setup.lastname || !this.elements.setup.lastname.value.trim()) {
@@ -687,46 +683,64 @@ initMobileHeader() {
         const settings = {
             lastname: this.elements.setup.lastname.value.trim(),
             tags: selectedTags,
-            difficulty: difficulty, // Только одно число!
+            difficulty: difficulty,  // Одно число!
             taskCount: parseInt(this.elements.setup.taskCountValue?.textContent || CONFIG.DEFAULTS.TASK_COUNT)
         };
         
-        // Загружаем задания ТОЛЬКО этого уровня сложности
+        // 🔥 ПРОВЕРЯЕМ статистику с одним параметром
+        const stats = await taskManager.getTasksStats(
+            settings.tags,
+            settings.difficulty  // Только одно число!
+        );
+        
+        if (stats && stats.total === 0) {
+            this.showError(`Нет заданий ${difficulty} уровня сложности для выбранных тегов`);
+            return;
+        }
+        
+        if (stats && stats.total < settings.taskCount) {
+            const confirmMessage = 
+                `⚠️ Для ${difficulty} уровня доступно только ${stats.total} заданий.\n\n` +
+                `По тегам:\n${
+                    stats.byTag.map(s => `  • ${s.tag}: ${s.available} заданий`).join('\n')
+                }\n\n` +
+                `Хотите продолжить с ${stats.total} заданиями?`;
+            
+            if (!confirm(confirmMessage)) {
+                return;
+            }
+            settings.taskCount = stats.total;
+            this.updateTaskCount(stats.total);
+        }
+        
+        // 🔥 ЗАГРУЖАЕМ задания с одним параметром
         const tasks = await marathon.loadTasks(
             settings.tags,
-            settings.difficulty,  // from
-            settings.difficulty,  // to - то же самое!
+            settings.difficulty,  // Одно число!
             settings.taskCount
         );
         
         if (tasks && tasks.length > 0) {
-            if (tasks.length < settings.taskCount) {
-                this.showMessage(
-                    `⚠️ Доступно только ${tasks.length} заданий ${settings.difficulty} уровня сложности.\n` +
-                    `Марафон будет состоять из ${tasks.length} заданий.`
-                );
-            }
-            
             marathon.setTasks(tasks);
             marathon.setCurrentTask(0);
             marathon.setSettings(settings);
             
             const taskIds = tasks.map(t => t.id);
             storage.addHistoryEntry({
-                ...settings,
+                lastname: settings.lastname,
                 tags: settings.tags.map(t => t.tag),
-                taskIds: taskIds,
+                difficulty: settings.difficulty,  // Одно число!
                 taskCount: tasks.length,
-                difficulty: settings.difficulty
+                taskIds: taskIds,
+                date: new Date().toLocaleString()
             });
             
             storage.saveLastSettings(settings);
             
             this.updateMarathonUI();
             this.switchScreen('marathon');
+            this.resetScroll();
             this.loadHistory();
-        } else {
-            this.showError(`Нет заданий ${difficulty} уровня сложности для выбранных тегов`);
         }
     } catch (error) {
         console.error('Ошибка запуска марафона:', error);
@@ -737,7 +751,7 @@ initMobileHeader() {
 }
 
   // Новый метод для обработки нажатия на следующее задание
-  handleNextTask() {
+handleNextTask() {
     const currentIndex = marathon.getCurrentIndex();
     const totalTasks = marathon.getTotalTasks();
     const task = marathon.getCurrentTask();
@@ -1049,4 +1063,3 @@ initMobileHeader() {
 }
 
 export const ui = new UIManager();
-
