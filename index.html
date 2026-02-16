@@ -7,6 +7,9 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
     />
     <title>C# Марафон заданий</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="icon" href="favicon.png">
   </head>
@@ -122,6 +125,7 @@
               <button id="doc-btn" class="header-btn doc-btn">
                 📚 Документация
               </button>
+              <button id="cheatsheet-btn" class="header-btn cheatsheet-btn">📘 ЧатЖБД родненький помоги</button>
               <div class="task-nav-buttons">
                 <button
                   id="prev-btn"
@@ -183,6 +187,18 @@
         <div id="doc-content" class="modal-body"></div>
       </div>
     </div>
+    <div id="cheatsheet-modal" class="modal cheatsheet-modal">
+    <div class="modal-content cheatsheet-content">
+        <div class="modal-header">
+            <h2 id="cheatsheet-title">📘 Шпаргалка</h2>
+            <span class="close cheatsheet-close">&times;</span>
+        </div>
+        <div class="modal-body cheatsheet-body" id="cheatsheet-body">
+            <!-- Сюда будет подгружаться контент из JSON -->
+            <p>Загрузка шпаргалки...</p>
+        </div>
+    </div>
+</div>
     <div id="instruction-modal" class="modal instruction-modal">
       <div class="modal-content instruction-content">
         <div class="modal-header">
