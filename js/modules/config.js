@@ -2,7 +2,7 @@
 export const CONFIG = {
     APP_NAME: 'C# Marathon',
     VERSION: '1.0.1',
-    DATA_VERSION: '1.0.9',
+    DATA_VERSION: '1.0.10',
     // Пути к данным
     DATA_PATHS: {
         INDEX: './js/data/index.json',
@@ -42,4 +42,5 @@ export const CONFIG = {
         'интерфейсы': '4.3.php'
     }
 };
+
 
