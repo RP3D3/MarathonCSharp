@@ -68,6 +68,18 @@
       "tag": "списки",
       "name": "Списки List<>",
       "file": "list.json"
+    },
+    {
+      "id": 12,
+      "tag": "словари",
+      "name": "Словари Dictionary<ключ, значение>",
+      "file": "dictionary.json"
+    },
+    {
+      "id": 13,
+      "tag": "строки",
+      "name": "Работа со строками",
+      "file": "string.json"
     }
   ]
 }
