@@ -940,6 +940,581 @@ input[type="text"]:focus {
         font-size: 13px;
     }
 }
+/* Стили для шпаргалки - светлая тема для текста */
+.cheatsheet-modal .modal-content {
+    max-width: 900px;
+    background-color: white; /* ← Белый фон */
+    color: #333; /* ← Тёмный текст */
+}
+
+.cheatsheet-modal .modal-header {
+    border-bottom-color: #e0e0e0;
+}
+
+.cheatsheet-modal .modal-header h2 {
+    color: #667eea; /* Ваш фирменный синий */
+}
+
+.cheatsheet-modal .modal-body {
+    color: #333;
+}
+
+.cheatsheet-modal .cheatsheet-section h3 {
+    color: #764ba2; /* Ваш фирменный фиолетовый */
+    margin-bottom: 15px;
+}
+
+.cheatsheet-modal .cheatsheet-section p {
+    color: #555;
+    line-height: 1.6;
+}
+
+/* А блоки кода оставляем тёмными, как в VS */
+.cheatsheet-modal .code-block {
+    background-color: #1e1e1e !important;
+    border-radius: 8px;
+    padding: 15px !important;
+    border: 1px solid #333;
+}
+
+.cheatsheet-modal .code-block code {
+    color: #d4d4d4 !important;
+}
+
+.cheatsheet-modal .close {
+    color: #aaa;
+}
+
+.cheatsheet-modal .close:hover {
+    color: #fff;
+}
+
+.cheatsheet-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.cheatsheet-section h3 {
+    color: #ce9178; /* Оранжевый, как строки */
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.cheatsheet-section p {
+    line-height: 1.6;
+    font-weight: 500;
+    color: #9cdcfe; /* Голубоватый для текста */
+}
+
+.code-description {
+    color: #6a9955 !important; /* Зеленый, как комментарии */
+    font-style: italic;
+    font-weight: 500;
+    margin: 10px 0 5px;
+}
+/* Вкладки для шпаргалок */
+.cheatsheet-tabs {
+    display: flex;
+    gap: 5px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* ===== ВКЛАДКИ ДЛЯ ШПАРГАЛОК ===== */
+
+/* Контейнер вкладок */
+.cheatsheet-tabs {
+    display: flex;
+    gap: 5px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    padding-bottom: 5px;
+}
+
+/* Кнопки вкладок */
+.cheatsheet-tab {
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s ease;
+    border-radius: 8px 8px 0 0;
+}
+
+.cheatsheet-tab:hover {
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+/* Активная вкладка */
+.cheatsheet-tab.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+    background: linear-gradient(to bottom, rgba(102, 126, 234, 0.1), transparent);
+}
+
+/* Контейнеры с контентом */
+.cheatsheet-tab-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.cheatsheet-tab-pane.active {
+    display: block;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .cheatsheet-tabs {
+        gap: 2px;
+    }
+    
+    .cheatsheet-tab {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+/* Сетка для всех тем */
+.all-topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.topic-card {
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.topic-card:hover {
+    transform: translateY(-3px);
+    border-color: #667eea;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.topic-card h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.topic-card p {
+    margin: 0;
+    font-size: 12px;
+    color: #999;
+}
+
+/* Кнопка "Все темы" */
+.plus-tab {
+    background: linear-gradient(135deg, #667eea20, #764ba220);
+    font-size: 16px;
+    padding: 12px 20px;
+}
+
+.plus-tab:hover {
+    background: linear-gradient(135deg, #667eea40, #764ba240);
+}
+
+/* Кнопка назад */
+.back-to-all-btn {
+    background: none;
+    border: none;
+    color: #667eea;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 30px;
+    transition: all 0.3s;
+}
+
+.back-to-all-btn:hover {
+    background: #f0f0f0;
+    transform: translateX(-5px);
+}
+/* Заголовок списка тем */
+.all-topics-header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 10px;
+}
+
+.all-topics-header h3 {
+    color: #667eea;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.topics-count {
+    color: #999;
+    font-size: 14px;
+}
+
+/* Сетка тем */
+.all-topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Карточка темы */
+.topic-card {
+    background: linear-gradient(135deg, #667eea05, #764ba205);
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 25px 20px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.topic-card:hover {
+    transform: translateY(-5px);
+    border-color: #667eea;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+    background: linear-gradient(135deg, #667eea10, #764ba210);
+}
+
+.topic-card:active {
+    transform: scale(0.95);
+}
+
+.topic-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.topic-card h4 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.topic-description {
+    margin: 0;
+    font-size: 13px;
+    color: #999;
+}
+
+/* Кнопка назад */
+.back-to-all-btn {
+    background: none;
+    border: 2px solid #667eea;
+    color: #667eea;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 25px;
+    margin: 0 0 20px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 30px;
+    transition: all 0.3s;
+}
+
+.back-to-all-btn:hover {
+    background: #667eea;
+    color: white;
+    transform: translateX(-5px);
+}
+
+/* Контейнер для одной темы */
+.cheatsheet-single-topic {
+    padding: 0 20px 20px 20px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .all-topics-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .topic-card {
+        padding: 15px;
+    }
+    
+    .topic-icon {
+        font-size: 36px;
+    }
+    
+    .topic-card h4 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .all-topics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Блоки кода от Highlight.js уже будут стилизованы, но добавим отступы */
+.code-block {
+    border-radius: 8px;
+    margin: 15px 0 !important;
+    padding: 15px !important;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    font-size: 14px;
+}
+
+/* Если Highlight.js не загрузится, будет запасной вариант */
+.code-block code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    white-space: pre-wrap;
+}
+/* Контейнер поиска */
+.search-container {
+    position: relative;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.topic-search {
+    width: 100%;
+    padding: 15px 45px 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background: white;
+}
+
+.topic-search:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.topic-search::placeholder {
+    color: #999;
+}
+
+/* Кнопка очистки поиска */
+.search-clear {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+    display: none;
+    transition: color 0.3s;
+}
+
+.search-clear:hover {
+    color: #dc3545;
+}
+
+.search-container.filled .search-clear {
+    display: block;
+}
+
+/* Информация о результатах поиска */
+.search-results-info {
+    text-align: right;
+    margin: 10px 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+#found-count {
+    font-weight: 600;
+    color: #667eea;
+}
+
+/* Подсветка совпадений */
+.topic-card.highlight {
+    animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+/* Сообщение об отсутствии шпаргалки */
+.missing-tag-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.missing-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.missing-tag-message h3 {
+    color: #dc3545;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.missing-tag-message p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.missing-tag-message ul {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+    text-align: left;
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.missing-tag-message li {
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: #555;
+    font-size: 16px;
+}
+
+.missing-tag-message li:last-child {
+    border-bottom: none;
+}
+
+.missing-tag-message .btn {
+    margin-top: 20px;
+    padding: 12px 40px;
+    font-size: 18px;
+}
+
+/* Вкладка для отсутствующего тега */
+.cheatsheet-tab.missing-tab {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.05);
+}
+
+.cheatsheet-tab.missing-tab:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.cheatsheet-tab.missing-tab.active {
+    color: white;
+    background: #dc3545;
+    border-bottom-color: #dc3545;
+}
+/* Подсветка найденного */
+.highlight {
+    background: linear-gradient(120deg, #ffd700 0%, #ffed4e 100%);
+    color: #333;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Анимация для найденных карточек */
+.topic-card.search-match {
+    animation: searchPulse 0.5s ease;
+}
+
+@keyframes searchPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    50% { 
+        transform: scale(1.02);
+        box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        border-color: #667eea;
+    }
+}
+
+/* Результаты поиска */
+.no-search-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 20px;
+    margin: 20px 0;
+}
+
+.no-search-results ul {
+    list-style: none;
+    padding: 0;
+}
+
+.no-search-results li {
+    padding: 8px 0;
+    color: #666;
+}
+
+.no-search-results li:before {
+    content: "💡 ";
+    margin-right: 5px;
+}
+.search-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #999;
+    margin: 10px 20px;
+    padding: 5px 10px;
+    background: #f5f5f5;
+    border-radius: 20px;
+}
+/* Нет результатов */
+.no-search-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    font-size: 18px;
+    background: #f8f9fa;
+    border-radius: 20px;
+}
+.cheatsheet-placeholder {
+    text-align: center;
+    padding: 50px 20px;
+    color: #999;
+}
+.cheatsheet-placeholder p {
+    margin: 10px 0;
+}
 .nav-btn-small {
     width: 45px;
     height: 45px;
