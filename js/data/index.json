@@ -80,6 +80,12 @@
       "tag": "строки",
       "name": "Работа со строками",
       "file": "string.json"
+    },
+    {
+      "id": 14,
+      "tag": "классы&объекты",
+      "name": "Классы и объекты",
+      "file": "classes_and_objects.json"
     }
   ]
 }
