@@ -1,0 +1,46 @@
+{
+  "tag": "classes_and_objects_ext",
+  "name": "Классы, поля и методы (Расширенный)",
+  "difficultyLevels": [
+    {
+      "level": 1,
+      "tasks": [
+        { "id": 14101, "title": "Модель кота", "description": "Класс Cat с полями Name, Color. Метод Meow().", "requirements": ["Поля public", "Вывод в консоль"], "hint": "string для имени, void для метода.", "exampleConsoleOutput": "Барсик говорит: Мяу!" },
+        { "id": 14102, "title": "Прямоугольник", "description": "Класс Rectangle с полями Width, Height. Метод GetArea().", "requirements": ["Тип double", "Return значения"], "hint": "Площадь = ширина * высота.", "exampleConsoleOutput": "Площадь: 50" },
+        { "id": 14103, "title": "Профиль юзера", "description": "Класс User: Login, Email. Метод ShowData().", "requirements": ["Строковые поля"], "hint": "Используй $ для вывода.", "exampleConsoleOutput": "Юзер: admin (admin@mail.com)" },
+        { "id": 14104, "title": "Счетчик шагов", "description": "Класс Pedometer с полем Steps. Метод Step() увеличивает на 1.", "requirements": ["Инкремент ++"], "hint": "Начальное значение поля сделай 0.", "exampleConsoleOutput": "Шагов: 1... Шагов: 2" },
+        { "id": 14105, "title": "Лампочка", "description": "Класс LightBulb с полем IsOn (bool). Метод Switch().", "requirements": ["Логическое отрицание !"], "hint": "IsOn = !IsOn меняет состояние.", "exampleConsoleOutput": "Свет включен: True" },
+        { "id": 14106, "title": "Температура", "description": "Класс Termometer с полем Celsius. Метод ToFahrenheit().", "requirements": ["Формула: C * 1.8 + 32"], "hint": "Возвращай double.", "exampleConsoleOutput": "В Фаренгейтах: 97.7" },
+        { "id": 14107, "title": "Кошелек", "description": "Класс Wallet с полем Money. Метод Add(amount).", "requirements": ["Параметры в методе"], "hint": "Money += amount.", "exampleConsoleOutput": "В кошельке: 500" },
+        { "id": 14108, "title": "Таймер", "description": "Класс Timer с полем Seconds. Метод Reset().", "requirements": ["Обнуление поля"], "hint": "Seconds = 0.", "exampleConsoleOutput": "Таймер сброшен" },
+        { "id": 14109, "title": "Автомобиль", "description": "Класс Car с полем Fuel. Метод Drive() тратит 10 ед.", "requirements": ["Проверка if (Fuel >= 10)"], "hint": "Вычитай из поля.", "exampleConsoleOutput": "Поехали! Топлива осталось: 40" },
+        { "id": 14110, "title": "Студент", "description": "Класс Student: Name, Grade. Метод IsExcellent().", "requirements": ["Возврат bool (Grade == 5)"], "hint": "Верни результат сравнения.", "exampleConsoleOutput": "Отличник: True" }
+      ]
+    },
+    {
+      "level": 2,
+      "tasks": [
+        { "id": 14201, "title": "Гараж (List)", "description": "Создай List<Car>. Найди в цикле все машины с Fuel < 5.", "requirements": ["List", "foreach", "Фильтрация"], "hint": "Создай пустой список и заполни его объектами.", "exampleConsoleOutput": "Машины на заправку: BMW, Audi" },
+        { "id": 14202, "title": "Магазин (Dictionary)", "description": "Dictionary<string, Product>. Найти товар по названию (ключу).", "requirements": ["Словарь объектов", "ContainsKey"], "hint": "Ключ - название, значение - объект Product.", "exampleConsoleOutput": "Товар: Хлеб, Цена: 30" },
+        { "id": 14203, "title": "Парсинг CSV", "description": "Распарси строку 'Ivan;25;500' в объект User (Name, Age, Balance).", "requirements": ["Split(';')", "int.Parse", "double.Parse"], "hint": "Индексы массива строк: 0, 1, 2.", "exampleConsoleOutput": "Загружен юзер: Ivan" },
+        { "id": 14204, "title": "Банковская система", "description": "Метод Transfer(Account to, double amount) между двумя объектами.", "requirements": ["Передача объекта в параметр"], "hint": "Снимай у одного, добавляй другому.", "exampleConsoleOutput": "Перевод 100 выполнен успешно" },
+        { "id": 14205, "title": "Средний балл группы", "description": "List<Student>. Метод класса Group для расчета среднего балла.", "requirements": ["Цикл", "Вычисление среднего"], "hint": "Суммируй Grade и дели на Count.", "exampleConsoleOutput": "Средний балл группы: 4.2" },
+        { "id": 14206, "title": "Склад (Поиск)", "description": "Найти в List<Item> предмет с самым большим весом.", "requirements": ["Поиск максимума", "Объекты"], "hint": "Запомни первый объект как 'max' и сравнивай.", "exampleConsoleOutput": "Самый тяжелый: Сейф (200 кг)" },
+        { "id": 14207, "title": "Телефонная книга", "description": "Dictionary<string, Contact>. Добавление с проверкой на дубликат.", "requirements": ["ContainsValue или Key"], "hint": "Если ключ есть, выведи 'Контакт существует'.", "exampleConsoleOutput": "Контакт 'Мама' уже есть" },
+        { "id": 14208, "title": "Корзина товаров", "description": "Класс Cart с List<Product>. Метод GetTotalSum().", "requirements": ["Вложенный список", "Цикл"], "hint": "Вызывай в цикле поле Price каждого продукта.", "exampleConsoleOutput": "Итого к оплате: 1250" },
+        { "id": 14209, "title": "Система логина", "description": "Массив объектов User[]. Проверь, совпадает ли Login и Password.", "requirements": ["Цикл по массиву", "Логические И (&&)"], "hint": "Ищи в цикле совпадение по обоим полям.", "exampleConsoleOutput": "Доступ разрешен" },
+        { "id": 14210, "title": "Статистика слов", "description": "Преврати текст в Dictionary<string, WordStat> (Слово и кол-во).", "requirements": ["Сплит текста", "Словарь"], "hint": "Если слова нет в словаре - добавь, если есть - ++Count.", "exampleConsoleOutput": "Слово 'профи' встретилось 3 раза" },
+        { "id": 14211, "title": "Рейтинг игроков", "description": "List<Player>. Отсортируй по Score (пузырьком или List.Sort).", "requirements": ["Сортировка", "Объекты"], "hint": "Сравнивай p1.Score и p2.Score.", "exampleConsoleOutput": "Топ-1: Legend27" },
+        { "id": 14212, "title": "Архив файлов", "description": "Класс FileData (Name, Size). Посчитать общий размер List<FileData>.", "requirements": ["Использование long для размера"], "hint": "Суммируй Size в цикле.", "exampleConsoleOutput": "Всего: 4.5 Гб" },
+        { "id": 14213, "title": "Зоопарк", "description": "Класс Zoo с массивом Animal[10]. Метод AddAnimal(Animal a).", "requirements": ["Работа с индексами массива"], "hint": "Найди первый null в массиве и запиши туда.", "exampleConsoleOutput": "Животное добавлено в клетку №3" },
+        { "id": 14214, "title": "Фильтр цен", "description": "Метод, возвращающий новый List<Product> с ценой > 1000.", "requirements": ["Создание списка внутри метода"], "hint": "Используй 'return resultList'.", "exampleConsoleOutput": "Найдено дорогих товаров: 5" },
+        { "id": 14215, "title": "Каталог фильмов", "description": "Поиск фильма в Dictionary<string, Movie> по части названия.", "requirements": ["Contains в строке"], "hint": "Цикл по dict.Keys.", "exampleConsoleOutput": "Результаты: Титаник, Титаны" },
+        { "id": 14216, "title": "Сенсор данных", "description": "Класс Sensor. Поле History (List<int>). Метод AddValue().", "requirements": ["Список как поле класса"], "hint": "Не забудь инициализировать List через new.", "exampleConsoleOutput": "В истории 15 замеров" },
+        { "id": 14217, "title": "Менеджер задач", "description": "Класс Task (IsDone). Метод CompleteAll(List<Task>).", "requirements": ["Изменение данных в списке"], "hint": "В цикле ставь task.IsDone = true.", "exampleConsoleOutput": "Все задачи выполнены" },
+        { "id": 14218, "title": "Учет зарплаты", "description": "Класс Employee. Посчитать налог 13% от поля Salary.", "requirements": ["Математика", "Тип decimal/double"], "hint": "Salary * 0.13.", "exampleConsoleOutput": "Налог: 6500" },
+        { "id": 14219, "title": "Почтовый индекс", "description": "Dictionary<int, string> (Индекс -> Город). Проверка корректности.", "requirements": ["TryParse для индекса"], "hint": "Сначала преврати ввод в int.", "exampleConsoleOutput": "Индекс 101000: Москва" },
+        { "id": 14220, "title": "Сценарий боя", "description": "Класс Unit (HP, Damage). Метод Attack(Unit target).", "requirements": ["Взаимодействие двух объектов"], "hint": "target.HP -= this.Damage.", "exampleConsoleOutput": "У врага осталось 40 HP" }
+      ]
+    }
+  ]
+}
