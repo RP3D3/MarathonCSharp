@@ -86,6 +86,12 @@
       "tag": "классы&объекты",
       "name": "Классы и объекты",
       "file": "classes_and_objects.json"
+    },
+    {
+      "id": 15,
+      "tag": "regex",
+      "name": "Регулярные выражения",
+      "file": "regex.json"
     }
   ]
 }
