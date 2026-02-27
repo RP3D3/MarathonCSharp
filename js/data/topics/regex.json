@@ -1,0 +1,46 @@
+{
+  "tag": "regex_tasks",
+  "name": "Регулярные выражения (Regex)",
+  "difficultyLevels": [
+    {
+      "level": 1,
+      "tasks": [
+        { "id": 15101, "title": "Только цифры", "description": "Напиши шаблон, который проверяет, состоит ли строка ровно из 3 цифр.", "requirements": ["Использование ^ и $", "\\d"], "hint": "^\\d{3}$", "exampleConsoleOutput": "123 -> True, 12a -> False" },
+        { "id": 15102, "title": "Поиск котиков", "description": "Найди в тексте все упоминания слова 'кот', 'кота', 'коту'.", "requirements": ["Шаблон кот[ау]?"], "hint": "Квадратные скобки и знак вопроса для опциональности.", "exampleConsoleOutput": "Найдено: кот, кота" },
+        { "id": 15103, "title": "Любая буква", "description": "Проверь, начинается ли строка с заглавной латинской буквы.", "requirements": ["Диапазон [A-Z]"], "hint": "Используй якорь начала строки ^.", "exampleConsoleOutput": "Hello -> True, hello -> False" },
+        { "id": 15104, "title": "Символ точки", "description": "Найди в строке расширение файла '.txt'.", "requirements": ["Экранирование точки \\."], "hint": "Точка в Regex — это спецсимвол. Чтобы найти обычную точку, пиши \\.", "exampleConsoleOutput": "Найдено: .txt" },
+        { "id": 15105, "title": "Пробелы", "description": "Проверь, содержит ли строка хотя бы один пробел.", "requirements": ["\\s"], "hint": "Метод Regex.IsMatch().", "exampleConsoleOutput": "True" },
+        { "id": 15106, "title": "Длина слова", "description": "Найди слово, состоящее ровно из 5 букв.", "requirements": ["\\w и {5}"], "hint": "Используй границы слова \\b для точности.", "exampleConsoleOutput": "Apple" },
+        { "id": 15107, "title": "Только латиница", "description": "Проверь, что в строке нет ничего, кроме английских букв.", "requirements": ["^[a-zA-Z]+$"], "hint": "Квантификатор + означает 'один или более'.", "exampleConsoleOutput": "Csharp -> True, Сшарп -> False" },
+        { "id": 15108, "title": "Или-или", "description": "Найди в тексте слова 'dog' или 'cat'.", "requirements": ["Оператор |"], "hint": "(dog|cat)", "exampleConsoleOutput": "Найдено: dog" },
+        { "id": 15109, "title": "Не цифра", "description": "Найди первый символ, который не является цифрой.", "requirements": ["\\D"], "hint": "Заглавная буква в спецсимволах — это отрицание.", "exampleConsoleOutput": "В '123A45' найдет 'A'" },
+        { "id": 15110, "title": "Конец строки", "description": "Проверь, заканчивается ли строка восклицательным знаком.", "requirements": ["!$"], "hint": "Якорь $ проверяет самый конец.", "exampleConsoleOutput": "Hi! -> True" }
+      ]
+    },
+    {
+      "level": 2,
+      "tasks": [
+        { "id": 15201, "title": "Валидация Email", "description": "Проверь строку на формат почты (что-то @ что-то . что-то).", "requirements": ["Regex.IsMatch", "Группировка"], "hint": "Пример: @\"^[\\w\\.-]+@[\\w\\.-]+\\.[a-z]{2,3}$\"", "exampleConsoleOutput": "test@mail.com -> True" },
+        { "id": 15202, "title": "Извлечение цен", "description": "В тексте 'Цена: 500руб, скидка 100руб' найди все числа перед 'руб'.", "requirements": ["Regex.Matches", "Positive Lookahead"], "hint": "Используй (\\d+)(?=руб)", "exampleConsoleOutput": "500, 100" },
+        { "id": 15203, "title": "Удаление лишних пробелов", "description": "Замени все двойные и тройные пробелы в строке на один.", "requirements": ["Regex.Replace", "\\s+"], "hint": "Заменяй \\s+ на \" \".", "exampleConsoleOutput": "Привет   мир -> Привет мир" },
+        { "id": 15204, "title": "Парсинг даты", "description": "Из строки '24.12.2023' извлеки день, месяц и год в отдельные переменные.", "requirements": ["Groups", "Захватывающие скобки"], "hint": "(\\d{2})\\.(\\d{2})\\.(\\d{4})", "exampleConsoleOutput": "День: 24, Месяц: 12" },
+        { "id": 15205, "title": "Сложный пароль", "description": "Проверь пароль: мин. 8 символов, хотя бы одна цифра и одна заглавная буква.", "requirements": ["Несколько проверок или Lookahead"], "hint": "Можно сделать 3 разных IsMatch для простоты.", "exampleConsoleOutput": "Pass123 -> True" },
+        { "id": 15206, "title": "Поиск хэштегов", "description": "Из поста в соцсети вытяни все слова, начинающиеся с #.", "requirements": ["#\\w+"], "hint": "Используй foreach по MatchCollection.", "exampleConsoleOutput": "#csharp, #dotnet" },
+        { "id": 15207, "title": "Маскировка данных", "description": "Замени все цифры в номере карты '4400 1122 3344 5566' на '*', кроме последних четырех.", "requirements": ["Regex.Replace", "Lookbehind/Lookahead"], "hint": "\\d(?=.*\\d{4})", "exampleConsoleOutput": "**** **** **** 5566" },
+        { "id": 15208, "title": "Поиск имен файлов", "description": "В списке путей 'C:\\Data\\image.png', 'D:\\test.txt' найди только имена файлов с расширениями.", "requirements": ["[^\\\\]+$"], "hint": "Ищи всё, что не слэш, в конце строки.", "exampleConsoleOutput": "image.png, test.txt" },
+        { "id": 15209, "title": "Проверка гос номера", "description": "Валидация авто-номера (пример: А123ВЕ77).", "requirements": ["Диапазоны кириллицы [А-Я]"], "hint": "^[А-Я]\\d{3}[А-Я]{2}\\d{2,3}$", "exampleConsoleOutput": "А111АА99 -> True" },
+        { "id": 15210, "title": "IP-адрес", "description": "Проверь, является ли строка корректным IPv4 (4 числа через точку).", "requirements": ["(\\d{1,3}\\.){3}\\d{1,3}"], "hint": "Не забудь про ^ и $.", "exampleConsoleOutput": "192.168.1.1 -> True" },
+        { "id": 15211, "title": "Удаление HTML тегов", "description": "Очисти строку '<div>Hello <b>World</b></div>' от тегов.", "requirements": ["<[^>]*>"], "hint": "Заменяй найденное на пустую строку.", "exampleConsoleOutput": "Hello World" },
+        { "id": 15212, "title": "Поиск домена", "description": "Из URL 'https://google.com/search' извлеки только 'google.com'.", "requirements": ["(?<=//)[^/]+"], "hint": "Используй Positive Lookbehind для //.", "exampleConsoleOutput": "google.com" },
+        { "id": 15213, "title": "Словарь из логов", "description": "Распарси строку лога '[ERROR] 404: Not Found' в объект класса Log (Level, Code, Message).", "requirements": ["Groups", "Классы"], "hint": "\\[(\\w+)\\] (\\d+): (.+)", "exampleConsoleOutput": "Уровень: ERROR, Код: 404" },
+        { "id": 15214, "title": "Повторяющиеся слова", "description": "Найди в тексте идущие подряд одинаковые слова (например, 'привет привет').", "requirements": ["Backreferences \\1"], "hint": "(\\b\\w+\\b)\\s+\\1", "exampleConsoleOutput": "Найдено: привет привет" },
+        { "id": 15215, "title": "Валидатор времени", "description": "Проверь строку на формат времени 24ч (ЧЧ:ММ).", "requirements": ["Логика диапазонов"], "hint": "^([01]\\d|2[0-3]):[0-5]\\d$", "exampleConsoleOutput": "23:59 -> True, 25:00 -> False" },
+        { "id": 15216, "title": "Сумма чисел в тексте", "description": "Найди все целые числа в тексте и выведи их сумму.", "requirements": ["Regex.Matches", "int.Parse"], "hint": "Используй .Sum() в LINQ или foreach.", "exampleConsoleOutput": "Текст: 10 и 20. Сумма: 30" },
+        { "id": 15217, "title": "Markdown ссылки", "description": "Из строки '[Текст](http://url)' извлеки отдельно текст и отдельно ссылку.", "requirements": ["\\[(.*?)\\]\\((.*?)\\)"], "hint": "Используй группы 1 и 2.", "exampleConsoleOutput": "Текст: Текст, Ссылка: http://url" },
+        { "id": 15218, "title": "CamelCase в SnakeCase", "description": "Преврати 'MySuperVariable' в 'my_super_variable'.", "requirements": ["Regex.Replace", "Lookahead"], "hint": "Ищи заглавную букву и вставляй перед ней _.", "exampleConsoleOutput": "my_super_variable" },
+        { "id": 15219, "title": "Валидация ИНН (10 цифр)", "description": "Проверь, что строка — это ИНН юридического лица.", "requirements": ["^\\d{10}$"], "hint": "Простая проверка длины, но через Regex.", "exampleConsoleOutput": "True" },
+        { "id": 15220, "title": "Генератор ников", "description": "Удали из строки все символы, кроме латиницы и цифр, чтобы сделать никнейм.", "requirements": ["[^a-zA-Z0-9]"], "hint": "Заменяй всё 'плохое' на пустую строку.", "exampleConsoleOutput": "Ivan_123! -> Ivan123" }
+      ]
+    }
+  ]
+}
