@@ -92,6 +92,13 @@
       "tag": "regex",
       "name": "Регулярные выражения",
       "file": "regex.json"
+    },
+    {
+      "id": 16,
+      "tag": "enum",
+      "name": "Множества enum",
+      "file": "enum.json"
     }
   ]
 }
+
